@@ -27,9 +27,9 @@ class ShoppingCart(object):
                     print("Item " + itemType.name + " not found in Inventory dropping item from shopping list.")
                 case _:
                     self.items.append(newitem)
-                    print("Item " + itemType.name + " added to ShoppingCart")
+                    print("Item " + itemType.name + " added to ShoppingCart (1)")
         else:
-            print("Item " + itemType.name + " already in ShoppingCart, increment items by count")
+            print("Item " + itemType.name + " already in ShoppingCart, increment items by " + str(count))
             newitem.itemCount = newitem.itemCount + count
 
     def itemCount(self):
@@ -63,6 +63,7 @@ class TestCart(unittest.TestCase):
         _shoppingCart.addSalesItem(SalesItemType.ORANGE, 2)
         self.assertEqual(_shoppingCart.itemCount(), 6, "Cart has incorrect number of products")
         _shoppingCart.addSingleSalesItem(SalesItemType.BANANA)
+        self.assertEqual(_shoppingCart.itemCount(), 6, "Cart has incorrect number of products")
         print("Number of items in cart is", _shoppingCart.itemCount())
         print("Total price is £", _shoppingCart.totalFormattedInPounds())
         self.assertEqual(_shoppingCart.totalise(), 330, "Totalised price not correct")
