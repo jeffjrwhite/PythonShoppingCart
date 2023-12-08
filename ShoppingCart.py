@@ -35,6 +35,14 @@ class ShoppingCart(object):
     def itemCount(self):
         return sum([item.itemCount for item in self.items])
 
+    def totalise(self):
+        return sum([itemFound.itemCount * itemFound.priceIn100s for itemFound in self.items])
+
+    def totalFormattedInPounds(self):
+        pounds = self.totalise()/100
+        pence = self.totalise()%100
+        return format("%d.%2d" % (pounds, pence))
+
 class TestCart(unittest.TestCase):
 
     def testCartAdd(self):
@@ -55,6 +63,9 @@ class TestCart(unittest.TestCase):
         _shoppingCart.addSalesItem(SalesItemType.ORANGE, 2)
         self.assertEqual(_shoppingCart.itemCount(), 6, "Cart has incorrect number of products")
         _shoppingCart.addSingleSalesItem(SalesItemType.BANANA)
+        print("Number of items in cart is", _shoppingCart.itemCount())
+        print("Total price is £", _shoppingCart.totalFormattedInPounds())
+        self.assertEqual(_shoppingCart.totalise(), 330, "Totalised price not correct")
 
 if __name__ == '__main__':
     unittest.main()
