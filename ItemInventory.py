@@ -4,10 +4,10 @@ from SalesItemType import SalesItemType
 
 
 class ItemInventory(object):
-    def __init__(self):
+    def __init__(self) -> None:
         self.items = []
 
-    def addItemToInventory(self, newitem: SalesItem):
+    def addItemToInventory(self, newitem: SalesItem) -> None:
         assert isinstance(newitem, SalesItem), 'invalid SalesItem provided'
         if newitem.itemType in [items.itemType for items in self.items]:
             print("Item " + newitem.itemType.name + " already in Inventory")
@@ -29,6 +29,12 @@ class ItemInventory(object):
 class TestItemInventory(unittest.TestCase):
 
     def testItemInventory(self):
+        # Show method annotations
+        print("ItemInventory", ItemInventory.__init__.__annotations__)
+        print("addItemToInventory", ItemInventory.addItemToInventory.__annotations__)
+        print("findItem", ItemInventory.findItem.__annotations__)
+        print("itemCount", ItemInventory.itemCount.__annotations__)
+
         itemInventory = ItemInventory()
         # Test for invalid parameter type (should be SalesItem not string)
         with self.assertRaises(AssertionError):

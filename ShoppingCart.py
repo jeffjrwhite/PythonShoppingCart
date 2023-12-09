@@ -4,7 +4,7 @@ from SalesItem import SalesItem
 from SalesItemType import SalesItemType
 
 class ShoppingCart(object):
-    def __init__(self, itemInventory: ItemInventory):
+    def __init__(self, itemInventory: ItemInventory) -> None:
         assert isinstance(itemInventory, ItemInventory), 'invalid ItemInventory provided'
         self.items = []
         self.itemInventory = itemInventory
@@ -17,10 +17,7 @@ class ShoppingCart(object):
         else:
             return salesItem[0]
 
-    def addSingleSalesItem(self, itemType: SalesItemType):
-        self.addSalesItem(itemType, 1)
-
-    def addSalesItem(self, itemType: SalesItemType, count: int):
+    def addSalesItem(self, itemType: SalesItemType, count: int = 1) -> None:
         assert isinstance(count, int), 'count must be integer value'
         assert isinstance(itemType, SalesItemType), 'invalid SalesItemType provided'
         newitem = self.findItem(itemType)
@@ -49,7 +46,14 @@ class ShoppingCart(object):
 
 class TestCart(unittest.TestCase):
 
-    def testCartAdd(self):
+    def testCartAdd(self) :
+        # Show method annotations
+        print("ShoppingCart", ShoppingCart.__init__.__annotations__)
+        print("addSalesItem", ShoppingCart.addSalesItem.__annotations__)
+        print("findItem", ShoppingCart.findItem.__annotations__)
+        print("itemCount", ShoppingCart.itemCount.__annotations__)
+        print("totalise", ShoppingCart.totalise.__annotations__)
+        print("totalFormattedInPounds", ShoppingCart.totalFormattedInPounds.__annotations__)
 
         _itemInventory = ItemInventory()
         _itemInventory.addItemToInventory(SalesItem(SalesItemType.APPLE, 45, 1))
@@ -61,18 +65,18 @@ class TestCart(unittest.TestCase):
         self.assertEqual(_shoppingCart.itemCount(), 0, "Cart has incorrect number of products")
         # Test for invalid parameter type (should be SalesItemType - APPLE or ORANGE)
         with self.assertRaises(AssertionError):
-            _shoppingCart.addSingleSalesItem(3)
+            _shoppingCart.addSalesItem(3)
         # Test for invalid parameter type (should be integer count not string)
         with self.assertRaises(AssertionError):
             _shoppingCart.addSalesItem(SalesItemType.APPLE, "three")
-        _shoppingCart.addSingleSalesItem(SalesItemType.APPLE)
-        _shoppingCart.addSingleSalesItem(SalesItemType.APPLE)
-        _shoppingCart.addSingleSalesItem(SalesItemType.APPLE)
-        _shoppingCart.addSingleSalesItem(SalesItemType.ORANGE)
+        _shoppingCart.addSalesItem(SalesItemType.APPLE)
+        _shoppingCart.addSalesItem(SalesItemType.APPLE)
+        _shoppingCart.addSalesItem(SalesItemType.APPLE)
+        _shoppingCart.addSalesItem(SalesItemType.ORANGE)
         self.assertEqual(_shoppingCart.itemCount(), 4, "Cart has incorrect number of products")
         _shoppingCart.addSalesItem(SalesItemType.ORANGE, 2)
         self.assertEqual(_shoppingCart.itemCount(), 6, "Cart has incorrect number of products")
-        _shoppingCart.addSingleSalesItem(SalesItemType.BANANA)
+        _shoppingCart.addSalesItem(SalesItemType.BANANA)
         self.assertEqual(_shoppingCart.itemCount(), 6, "Cart has incorrect number of products")
         print("Number of items in cart is", _shoppingCart.itemCount())
         print("Total price is £", _shoppingCart.totalFormattedInPounds())
