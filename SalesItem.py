@@ -4,7 +4,9 @@ from SalesItemType import SalesItemType
 class SalesItem(object):
     def __init__(self, itemType: SalesItemType, priceIn100s: int, itemCount: int) -> None:
         assert isinstance(itemCount, int), 'itemCount must be integer value'
+        assert (itemCount > 0), 'itemCount must be a positive integer value'
         assert isinstance(priceIn100s, int), 'priceIn100s must be integer value'
+        assert (priceIn100s > 0), 'priceIn100s must be a positive integer value'
         assert isinstance(itemType, SalesItemType), 'invalid SalesItemType provided'
 
         self.itemType = itemType
@@ -13,6 +15,7 @@ class SalesItem(object):
 
     def increaseItemCount(self, add: int = 1) -> None:
         assert isinstance(add, int), 'add must be integer value'
+        assert (add > 0), 'add must be a positive integer value'
         self.itemCount = self.itemCount + add
 
     def totalPriceIn100s(self) -> int:
@@ -33,6 +36,9 @@ class TestSalesItem(unittest.TestCase):
             salesItem = SalesItem(SalesItemType.APPLE,"0.75", 3)
         with self.assertRaises(AssertionError):
             salesItem = SalesItem("apple",75, 3)
+        # Test for invalid count (must be positive integer)
+        with self.assertRaises(AssertionError):
+            salesItem = SalesItem(SalesItemType.APPLE,75, -3)
 
         salesItem = SalesItem(SalesItemType.APPLE,75, 3)
 

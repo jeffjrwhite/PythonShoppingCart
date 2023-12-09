@@ -19,6 +19,7 @@ class ShoppingCart(object):
 
     def addSalesItem(self, itemType: SalesItemType, count: int = 1) -> None:
         assert isinstance(count, int), 'count must be integer value'
+        assert (count > 0), 'count must be a positive integer value'
         assert isinstance(itemType, SalesItemType), 'invalid SalesItemType provided'
         newitem = self.findItem(itemType)
         if newitem is None :
@@ -74,6 +75,8 @@ class TestCart(unittest.TestCase):
         _shoppingCart.addSalesItem(SalesItemType.APPLE)
         _shoppingCart.addSalesItem(SalesItemType.ORANGE)
         self.assertEqual(_shoppingCart.itemCount(), 4, "Cart has incorrect number of products")
+        with self.assertRaises(AssertionError):
+            _shoppingCart.addSalesItem(SalesItemType.ORANGE, -2)
         _shoppingCart.addSalesItem(SalesItemType.ORANGE, 2)
         self.assertEqual(_shoppingCart.itemCount(), 6, "Cart has incorrect number of products")
         _shoppingCart.addSalesItem(SalesItemType.BANANA)
