@@ -13,6 +13,7 @@ class TestSalesItemType(unittest.TestCase):
         apple = SalesItemType.APPLE
         orange = SalesItemType.ORANGE
         self.assertNotEqual(apple, orange, "ENUMs are the same")
+        print(apple)
 
 if __name__ == '__main__':
     unittest.main()

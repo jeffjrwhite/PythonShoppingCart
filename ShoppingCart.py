@@ -9,6 +9,9 @@ class ShoppingCart(object):
         self.items = []
         self.itemInventory = itemInventory
 
+    def __str__(self):
+        return ' '.join([str(item) + ", " for item in self.items])
+
     def findItem(self, itemType: SalesItemType) -> SalesItem:
         assert isinstance(itemType, SalesItemType), 'invalid SalesItemType provided'
         salesItem = [itemFound for itemFound in self.items if itemType == itemFound.itemType]
@@ -84,6 +87,7 @@ class TestCart(unittest.TestCase):
         print("Number of items in cart is", _shoppingCart.itemCount())
         print("Total price is £", _shoppingCart.totalFormattedInPounds())
         self.assertEqual(_shoppingCart.totalise(), 330, "Totalised price not correct")
+        print(_shoppingCart)
 
 if __name__ == '__main__':
     unittest.main()

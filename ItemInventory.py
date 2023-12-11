@@ -7,6 +7,9 @@ class ItemInventory(object):
     def __init__(self) -> None:
         self.items = []
 
+    def __str__(self):
+        return ' '.join([str(item) + ", " for item in self.items])
+
     def addItemToInventory(self, newitem: SalesItem) -> None:
         assert isinstance(newitem, SalesItem), 'invalid SalesItem provided'
         if newitem.itemType in [items.itemType for items in self.items]:
@@ -51,6 +54,7 @@ class TestItemInventory(unittest.TestCase):
         orange = itemInventory.findItem(SalesItemType.ORANGE)
         print("Orange found ", orange.itemType)
         self.assertEqual(orange.itemType, SalesItemType.ORANGE, "ORANGE not found in Inventory")
+        print(itemInventory)
 
 if __name__ == '__main__':
     unittest.main()

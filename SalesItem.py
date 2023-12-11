@@ -13,6 +13,11 @@ class SalesItem(object):
         self.priceIn100s = priceIn100s
         self.itemCount = itemCount
 
+    def __str__(self):
+        return "(itemType: " + self.itemType.name \
+            + ", priceIn100s: " + str(self.priceIn100s) \
+            + ", itemCount: " + str(self.itemCount) + ")"
+
     def increaseItemCount(self, add: int = 1) -> None:
         assert isinstance(add, int), 'add must be integer value'
         assert (add > 0), 'add must be a positive integer value'
@@ -41,6 +46,7 @@ class TestSalesItem(unittest.TestCase):
             salesItem = SalesItem(SalesItemType.APPLE,75, -3)
 
         salesItem = SalesItem(SalesItemType.APPLE,75, 3)
+        print(salesItem)
 
         self.assertEqual(salesItem.itemType, SalesItemType.APPLE, "SalesItemType is wrong type")
         self.assertEqual(salesItem.priceIn100s, 75, "SalesItemType is wrong price")
